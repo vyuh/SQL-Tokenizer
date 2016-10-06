@@ -32,7 +32,7 @@ my $re= qr{
         `(?>(?:(?>[^`\\]+)|``|\\.)*)+`
                                 # anything inside backticks quotes, ungreedy
         |
-        '(?>(?:(?>[^'\\]+)|''|\\.)*)+'
+        [xX]?'(?>(?:(?>[^'\\]+)|''|\\.)*)+'
                                 # anything inside single quotes, ungreedy.
         |
         /\*[\ \t\r\n\S]*?\*/      # C style comments
