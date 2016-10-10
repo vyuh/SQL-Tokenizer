@@ -32,7 +32,7 @@ my $re= qr{
         `(?>(?:(?>[^`\\]+)|``|\\.)*)+`
                                 # anything inside backticks quotes, ungreedy
         |
-        [xX]?'(?>(?:(?>[^'\\]+)|''|\\.)*)+'
+        [xX]?'(?:[^'\\]++|''|\\.)*+' #posessiveness syntactic sugar for (?>pat)
                                 # anything inside single quotes, ungreedy.
         |
         /\*[\ \t\r\n\S]*?\*/      # C style comments
@@ -47,12 +47,12 @@ my $re= qr{
         |
         [\t\ ]+                 # any kind of white spaces
     )
-}smx;
+}sx; # use m too if you use ^$ in re
 
 sub tokenize_sql {
     my ( $query, $remove_white_tokens )= @_;
 
-    my @query= $query =~ m{$re}smxg;
+    my @query= $query =~ m{$re}sxg; # i think only g is sufficient
 
     if ($remove_white_tokens) {
         @query= grep( !/^[\s\n\r]*$/, @query );
